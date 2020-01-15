@@ -81,6 +81,21 @@
         </v-layout>
       </v-flex>
     </v-layout>
+    <v-row justify="space-around" class="mb-2">
+      <span class="group pa-2">
+        <v-icon x-small>mdi-home</v-icon>
+        <v-icon small>mdi-alert-circle-check-outline</v-icon>
+        <v-icon>mdi-information</v-icon>
+        <v-icon medium>mdi-information</v-icon>
+        <v-icon large>mdi-information</v-icon>
+      </span>
+
+      <span class="group pa-2 teal">
+        <v-icon large dark>mdi-folder-open</v-icon>
+        <v-icon dark>mdi-widgets</v-icon>
+        <v-icon>mdi-gavel</v-icon>
+      </span>
+    </v-row>
   </v-container>
 </template>
 
@@ -142,3 +157,11 @@ export default {
   }),
 };
 </script>
+
+<style lang="css">
+.group {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+}
+</style>
