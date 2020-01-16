@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container fluid fill-height>
-      <v-row :align="'center'" :justify="'center'">
+      <v-row no-gutters align="center" justify="center">
         <v-col cols="12">
           <UserInputInfo />
         </v-col>
@@ -26,11 +26,6 @@ export default {
   data: () => ({
     //
   }),
-  // methods: {
-  //   changeTheme() {
-  //     this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-  //   }
-  // }
 };
 </script>
 
