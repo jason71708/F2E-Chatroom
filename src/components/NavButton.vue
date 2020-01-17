@@ -11,6 +11,7 @@
           <v-hover v-slot:default="{ hover }">
              <v-card 
               hover
+              to="chat"
               outlined 
               max-width="240"
               :class="{ 'on-hover': hover }"

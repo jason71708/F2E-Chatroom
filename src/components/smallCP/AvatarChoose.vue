@@ -50,14 +50,6 @@
     
 </template>
 <script>
-// import user1 from '@/assets/icon/member01.svg';
-// import user2 from '@/assets/icon/member02.svg';
-// import user3 from '@/assets/icon/member03.svg';
-// import user4 from '@/assets/icon/member04.svg';
-// import user5 from '@/assets/icon/member05.svg';
-// import user6 from '@/assets/icon/member06.svg';
-// import user7 from '@/assets/icon/member07.svg';
-
 export default {
     data: () => ({
         isChoose: false,

@@ -8,7 +8,7 @@
         </v-col>
         <v-col cols="12">
             <div class="input-card mx-auto">
-                <v-text-field placeholder="輸入暱稱或直接匿名開始" color="#fff"></v-text-field>
+                <v-text-field placeholder="輸入暱稱或直接匿名開始" color="normal"></v-text-field>
             </div>
         </v-col>
     </v-row>
@@ -16,7 +16,7 @@
 <script>
 
 import AvatarChoose from '@/components/smallCP/AvatarChoose';
-//:class="'d-flex justify-center mb-6'"
+
 export default {
   components: {
     AvatarChoose,
