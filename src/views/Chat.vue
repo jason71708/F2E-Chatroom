@@ -21,14 +21,21 @@
       <v-divider></v-divider>
 
       <v-list>
-        <v-list-item v-for="n in 6" :key="n" @click="noting()">  
+        <v-list-item v-for="(i,n) in groups" :key="n" @click="noting()">  
           <v-list-item-icon>
-            <AvatarIcon :outer="60" :inner="40" :avatar="n" :space="2"></AvatarIcon>
+            <AvatarIcon :outer="60" :inner="40" :avatar="i.avatar" :space="2"></AvatarIcon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>八卦閒聊區 ({{n*n}})</v-list-item-title>
-            <v-list-item-subtitle>Secondary{{n+n}}</v-list-item-subtitle>
+            <v-list-item-title>{{i.name}} ({{i.members}})</v-list-item-title>
+            <v-list-item-subtitle>{{i.subTitle}}</v-list-item-subtitle>
           </v-list-item-content>
+          <v-list-item-avatar
+            v-if="i.noSees!==0"
+            color="normal" 
+            max-height="20" 
+            max-width="20" 
+            min-width="20" 
+            class="mr-6 reverse--text caption">{{i.noSees}}</v-list-item-avatar>
         </v-list-item>
         <v-list-item class="j-list-item">
           <v-list-item-action class="mr-4">
@@ -140,6 +147,42 @@ export default {
       { title: "example2" },
       { title: "example3" },
       { title: "example4" },
+    ],
+    groups: [
+      {
+        avatar: 1,
+        members: 9,
+        name: '八卦版',
+        subTitle: '我不知道',
+        noSees: 123
+      },
+      {
+        avatar: 2,
+        members: 156,
+        name: '閒聊區',
+        subTitle: '這邊要做成',
+        noSees: 92
+      },
+      {
+        avatar: 3,
+        members: 46,
+        name: '遊戲攻略',
+        subTitle: '群組資訊',
+        noSees: 12
+      },
+      {
+        avatar: 4,
+        members: 1234,
+        name: '靠北高師大',
+        subTitle: '還是',
+        noSees: 0
+      },{
+        avatar: 5,
+        members: 6,
+        name: '脖子和單身狗群聚地',
+        subTitle: '最新未讀訊息',
+        noSees: 4
+      },
     ],
     messages: [
       {
