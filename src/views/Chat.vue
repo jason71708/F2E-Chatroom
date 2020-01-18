@@ -3,10 +3,10 @@
     <v-navigation-drawer width="300" absolute :permanent="isDesktop" :hide-overlay="true" v-model="drawerPopUp">
       <v-list-item>  
           <v-list-item-icon>
-            <AvatarIcon :outer="60" :inner="40" :avatar="7" :space="2"></AvatarIcon>
+            <AvatarIcon :outer="60" :inner="40" :avatar="userAvatar" :space="2"></AvatarIcon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="title">匿名</v-list-item-title>
+            <v-list-item-title class="title">{{userName}}</v-list-item-title>
           </v-list-item-content>
           <!-- <v-list-item-icon class="j-icon">
             <v-icon>mdi-plus-thick</v-icon>
@@ -89,7 +89,7 @@
       <v-divider class="j-divdider text-center mb-6"></v-divider>
 
       <v-sheet tile class="j-sheet j-sheet-bgc">
-        <template v-for="(message, index) in messages">
+        <template v-for="(message, index) in messageLog">
           <JMessage 
             :key="index" 
             :userName="message.user"
@@ -118,9 +118,9 @@
               </v-btn>
             </v-card-text>
          </v-card>
-        <v-text-field hide-details filled placeholder="說點什麼吧～" color="normal" height="70px">
+        <v-text-field hide-details filled placeholder="說點什麼吧～" color="normal" height="70px" v-model.trim="inputMessage" @keyup.enter="sendMessageHandler()">
           <template v-slot:append>
-            <v-btn icon>
+            <v-btn icon @click="sendMessageHandler()">
               <img width="30" height="30" :src="require(`@/assets/icon/send.svg`)">
             </v-btn>
           </template>
@@ -134,6 +134,9 @@
 <script>
 import AvatarIcon from '@/components/smallCP/AvatarIcon';
 import JMessage from '@/components/smallCP/JMessage';
+
+import io from "socket.io-client";
+const socket = io("http://localhost:3000/");
 
 export default {
   name: 'chat',
@@ -184,62 +187,12 @@ export default {
         noSees: 4
       },
     ],
-    messages: [
-      {
-        avatar: 6,
-        user: '煞氣a小莊',
-        time: '12:24',
-        isMe: false,
-        mesg: '今天出來玩好不好～'
-      },
-      {
-        avatar: 6,
-        user: '煞氣a小莊',
-        time: '16:24',
-        isMe: false,
-        mesg: '都沒人理我ＱＱ'
-      },
-      {
-        avatar: 4,
-        user: '蘇義翔',
-        time: '16:25',
-        isMe: false,
-        mesg: '不要'
-      },
-      {
-        avatar: 1,
-        user: '蔡昀澤',
-        time: '16:26',
-        isMe: false,
-        mesg: '不要'
-      },
-      {
-        avatar: 7,
-        user: '匿名',
-        time: '16:27',
-        isMe: true,
-        mesg: '不要'
-      },
-      {
-        avatar: 5,
-        user: '林勁呈',
-        time: '16:27',
-        isMe: false,
-        mesg: '不要'
-      },
-      {
-        avatar: 2,
-        user: 'Ken',
-        time: '16:27',
-        isMe: false,
-        mesg: '不要'
-      },
-    ],
     btns: [
       'information',
       'picture',
       'attachment'
     ],
+    inputMessage: '',
     drawerPopUp: false,
   }),
   computed: {
@@ -252,11 +205,38 @@ export default {
         case 'xl': return true
       }
     },
+    userName() {
+      return this.$store.state.userName
+    },
+    userAvatar() {
+      return this.$store.state.avatarNum
+    },
+    messageLog() {
+      return this.$store.state.messages
+    }
   },
   methods: {
     noting() {
       return
+    },
+    sendMessageHandler() {
+      const mesgData = {
+        avatar: this.userAvatar,
+        user: this.userName,
+        time: '12:24',
+        isMe: false,
+        mesg: this.inputMessage
+      }
+      socket.emit('sendMessage', mesgData);
+      this.inputMessage = '';
     }
+  },
+  mounted() {
+    console.log(this.$store)
+    socket.on('newMessage', function(data){
+        this.$store.commit('NEW_MESSAGE', data)
+        console.log(data)
+    })
   }
 };
 </script>
