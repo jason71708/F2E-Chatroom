@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000; //new
 server.listen(port);
 // WARNING: app.listen(80) will NOT work here!
 
-app.use(express.static(path.join(__dirname, 'dist')));  //new
+app.use('/', express.static(path.join(__dirname, '/dist')));  //new
 // app.get('/', function (req, res) {
 //   res.sendFile(__dirname + '/index.html');
 // });
