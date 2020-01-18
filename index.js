@@ -1,6 +1,7 @@
 const path = require('path'); //new
 var express = require('express');
-var app = express();
+const serveStatic = require('serve-static');
+var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3000; //new
@@ -8,7 +9,7 @@ var port = process.env.PORT || 3000; //new
 server.listen(port);
 // WARNING: app.listen(80) will NOT work here!
 
-app.use('/', express.static(path.join(__dirname, '/dist')));  //new
+app.use('/', serveStatic(path.join(__dirname, '/dist')));  //new
 // app.get('/', function (req, res) {
 //   res.sendFile(__dirname + '/index.html');
 // });
