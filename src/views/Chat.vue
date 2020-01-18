@@ -137,6 +137,7 @@ import JMessage from '@/components/smallCP/JMessage';
 
 import io from "socket.io-client";
 const socket = io("http://localhost:3000/");
+// const socket = io("https://f2e-week7-2019.herokuapp.com:3000");
 
 export default {
   name: 'chat',
@@ -232,10 +233,8 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store)
-    socket.on('newMessage', function(data){
+    socket.on('newMessage', data => {
         this.$store.commit('NEW_MESSAGE', data)
-        console.log(data)
     })
   }
 };
