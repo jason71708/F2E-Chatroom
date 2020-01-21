@@ -143,8 +143,8 @@ import JMessage from '@/components/smallCP/JMessage';
 import JUserInOutMessage from '@/components/smallCP/JUserInOutMessage';
 
 import io from "socket.io-client";
-// const socket = io("http://localhost:3000/");
-const socket = io("https://f2e-week7-2019.herokuapp.com:3000");
+const socket = io("http://localhost:3000/");
+// const socket = io("https://f2e-week7-2019.herokuapp.com:3000");
 
 export default {
   name: 'chat',
@@ -336,7 +336,6 @@ export default {
   width: 100%;
   height: calc(100% - 130px - 85px - 24px);
   overflow: scroll;
-  width: 100vw;
 }
 .theme--dark.v-sheet.j-sheet-bgc{
   background-color: #303030
