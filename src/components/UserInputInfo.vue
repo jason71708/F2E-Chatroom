@@ -1,7 +1,7 @@
 <template>
     <v-row align="center" justify="center">
         <v-col cols="12">
-            <h1 class="my-4 mx-auto text-center">{{appTitle+name}}</h1>
+            <h1 class="my-4 mx-auto text-center">{{appTitle}}</h1>
         </v-col>
         <v-col cols="12">
             <AvatarChoose class="mx-auto" />
