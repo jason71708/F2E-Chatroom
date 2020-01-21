@@ -1,7 +1,7 @@
 <template>
     <v-sheet 
       :class="{ 'justify-end': isMe }"
-      class="j-sheet-message j-sheet-bgc mb-6 px-6">
+      class="j-sheet-message j-sheet-bgc pb-6 px-6">
         <AvatarIcon 
           v-if="!isMe" 
           :avatar="avatar">
@@ -10,7 +10,7 @@
           :class="{ 'order-1': isMe }"
           class="ml-3">
             <h4 
-              v-if="!isMe" 
+              v-if="!isMe"
               class="subtitle-2 mb-2">{{userName}}</h4>
             <v-sheet 
               :class="{ 'my-mesg primary': isMe }"

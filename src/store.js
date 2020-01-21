@@ -28,6 +28,12 @@ export default new Vuex.Store({
             mesg: '不要'
         },
         {
+            isConnect: true,
+            user:'蔡昀澤',
+            time: '16:25',
+            isIn:true,
+        },
+        {
             avatar: 1,
             user: '蔡昀澤',
             time: '16:26',
@@ -49,9 +55,15 @@ export default new Vuex.Store({
             mesg: '不要'
         },
         {
+            isConnect: true,
+            user:'林勁呈',
+            time: '16:28',
+            isIn:false,
+        },
+        {
             avatar: 2,
             user: 'Ken',
-            time: '16:27',
+            time: '16:30',
             isMe: false,
             mesg: '不要'
         },
@@ -65,7 +77,8 @@ export default new Vuex.Store({
             if(obj.name){
                 state.userName = obj.name
             }else{
-                return
+                const num = Math.floor(Math.random()*99)+1;
+                return '匿名'+ num;
             }
         },
         NEW_MESSAGE (state, obj) {

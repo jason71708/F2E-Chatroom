@@ -51,9 +51,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-col class="j-col" v-if="isDesktop">
-      1212121
-    </v-col>
+    <v-col class="j-col" v-if="isDesktop"></v-col>
     <v-col class="j-col2">
        <v-app-bar
           height="85"
@@ -88,9 +86,17 @@
       </v-app-bar>
       <v-divider class="j-divdider text-center mb-6"></v-divider>
 
-      <v-sheet tile class="j-sheet j-sheet-bgc">
+      <v-sheet id="messageBox" tile class="j-sheet j-sheet-bgc">
         <template v-for="(message, index) in messageLog">
+          <JUserInOutMessage
+            v-if="message.isConnect"
+            :key="index"
+            :userName="message.user"
+            :time="message.time"
+            :isIn="message.isIn">
+          </JUserInOutMessage>
           <JMessage 
+            v-else
             :key="index" 
             :userName="message.user"
             :avatar="message.avatar"
@@ -134,9 +140,10 @@
 <script>
 import AvatarIcon from '@/components/smallCP/AvatarIcon';
 import JMessage from '@/components/smallCP/JMessage';
+import JUserInOutMessage from '@/components/smallCP/JUserInOutMessage';
 
 import io from "socket.io-client";
-const socket = io("http://localhost:3000/");
+const socket = io("http://localhost:3000/", {autoConnect: false});
 // const socket = io("https://f2e-week7-2019.herokuapp.com:3000");
 
 export default {
@@ -144,6 +151,7 @@ export default {
   components: {
     AvatarIcon,
     JMessage,
+    JUserInOutMessage,
   },
   data: () => ({
     items: [
@@ -220,22 +228,66 @@ export default {
     noting() {
       return
     },
+    convertTime() {
+      const date = new Date();
+      const hours = ('0'+date.getHours()).slice(-2);
+      const mins = ('0'+date.getMinutes()).slice(-2);
+      return hours+':'+mins
+    },
+    autoSrcoll() {
+      const box = this.$el.querySelector('#messageBox');
+      box.scrollTop = box.scrollHeight - box.clientHeight;
+    },
     sendMessageHandler() {
+      if(this.inputMessage=='')return;
       const mesgData = {
         avatar: this.userAvatar,
         user: this.userName,
-        time: '12:24',
+        time: this.convertTime(),
         isMe: false,
         mesg: this.inputMessage
       }
       socket.emit('sendMessage', mesgData);
+      mesgData.isMe = true;
+      this.$store.commit('NEW_MESSAGE', mesgData);
       this.inputMessage = '';
+      this.autoSrcoll();
     }
   },
   mounted() {
-    socket.on('newMessage', data => {
-        this.$store.commit('NEW_MESSAGE', data)
+    socket.open();
+    socket.emit('userInOut', {
+      isConnect: true,
+      user: this.userName,
+      time: this.convertTime(),
+      isIn: true,
+    });
+    socket.on('userInoutMessage', data => {
+      this.$store.commit('NEW_MESSAGE', data);
     })
+    socket.on('newMessage', data => {
+      this.$store.commit('NEW_MESSAGE', data);
+    })
+  },
+  watch: {
+    messageLog() {
+      const box = this.$el.querySelector('#messageBox')
+      if(box.scrollHeight - 90 > box.scrollTop + box.clientHeight)return
+      this.$nextTick(() => { //用 $nextTick 確保 dom 是更新後狀態
+        box.scrollTop = box.scrollHeight - box.clientHeight
+      })
+    }
+  },
+  beforeDestroy() {
+    socket.emit('userInOut', {
+      isConnect: true,
+      user: this.userName,
+      time: this.convertTime(),
+      isIn: false,
+    });
+    socket.off('userInoutMessage');
+    socket.off('newMessage');
+    socket.close();
   }
 };
 </script>
@@ -284,6 +336,7 @@ export default {
   width: 100%;
   height: calc(100% - 130px - 85px - 24px);
   overflow: scroll;
+  width: 100vw;
 }
 .theme--dark.v-sheet.j-sheet-bgc{
   background-color: #303030

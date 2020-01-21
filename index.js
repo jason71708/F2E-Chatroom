@@ -13,24 +13,11 @@ app.use(express.static(path.join(__dirname, 'dist')));  //new
 //   res.sendFile(__dirname + '/index.html');
 // });
 
-
-// var chat = io
-//   .of('/chat')
-//   .on('connection', function (socket) {
-//     socket.emit('a message', {
-//         that: 'only'
-//       , '/chat': 'will get'
-//     });
-//     chat.emit('userComeInOut', {
-//         everyone: 'in'
-//       , '/chat': 'will get'
-//     });
-//   });
 io.on('connection', function (socket) {
-  // socket.on('userInOut', function (data) {
-  //   console.log(data.avatarNum+'.使用者: '+data.userName);
-  // });
+  socket.on('userInOut', function (data) {
+    io.emit('userInoutMessage', data)
+  });
   socket.on('sendMessage', function(data) {
-    io.emit('newMessage', data)
+    socket.broadcast.emit('newMessage', data)
   })
 });
