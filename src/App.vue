@@ -15,8 +15,11 @@ export default {
 
 <style>
 /* 因在 IE 11 只使用 min-height 會導致錯誤*/
+.v-application.v-application--is-ltr{
+  width: 100vw;
+}
 .v-application--wrap{
-  height: 100vh;  
+  height: 100vh;
 }
 .v-application--wrap .container{
   padding: 0;
