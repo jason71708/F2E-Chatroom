@@ -143,7 +143,8 @@ import JMessage from '@/components/smallCP/JMessage';
 import JUserInOutMessage from '@/components/smallCP/JUserInOutMessage';
 
 import io from "socket.io-client";
-const socket = io("https://f2e-week7-2019.herokuapp.com:3000");
+const socket = io.connect("https://f2e-week7-2019.herokuapp.com:3030");
+// const socket = io("http://localhost:3030");
 
 export default {
   name: 'chat',
@@ -251,9 +252,19 @@ export default {
       this.$store.commit('NEW_MESSAGE', mesgData);
       this.inputMessage = '';
       this.autoSrcoll();
+    },
+    beforeunloadHandler (e) {
+      const mesgData = {
+        isConnect: true,
+        user: this.userName,
+        time: this.convertTime(),
+        isIn: false,
+      }
+      socket.emit('userInOut', mesgData);
     }
   },
   mounted() {
+    window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
     socket.open();
     socket.emit('userInOut', {
       isConnect: true,
@@ -278,12 +289,14 @@ export default {
     }
   },
   beforeDestroy() {
-    socket.emit('userInOut', {
+    const mesgData = {
       isConnect: true,
       user: this.userName,
       time: this.convertTime(),
       isIn: false,
-    });
+    }
+    this.$store.commit('NEW_MESSAGE', mesgData);
+    socket.emit('userInOut', { mesgData });
     socket.off('userInoutMessage');
     socket.off('newMessage');
     socket.close();
