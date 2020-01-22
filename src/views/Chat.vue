@@ -336,7 +336,10 @@ export default {
   width: 100%;
   height: calc(100% - 130px - 85px - 24px);
   overflow: scroll;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
 }
+.v-sheet.j-sheet::-webkit-scrollbar { width: 0 !important }
 .theme--dark.v-sheet.j-sheet-bgc{
   background-color: #303030
 }

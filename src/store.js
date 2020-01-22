@@ -78,7 +78,7 @@ export default new Vuex.Store({
                 state.userName = obj.name
             }else{
                 const num = Math.floor(Math.random()*99)+1;
-                return '匿名'+ num;
+                state.userName = '匿名'+ num;
             }
         },
         NEW_MESSAGE (state, obj) {
