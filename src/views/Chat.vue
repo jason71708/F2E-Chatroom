@@ -143,7 +143,7 @@ import JMessage from '@/components/smallCP/JMessage';
 import JUserInOutMessage from '@/components/smallCP/JUserInOutMessage';
 
 import io from "socket.io-client";
-const socket = io("https://f2e-week7-2019.herokuapp.com");
+const socket = io("https://f2e-week7-2019.herokuapp.com:3000");
 
 export default {
   name: 'chat',
