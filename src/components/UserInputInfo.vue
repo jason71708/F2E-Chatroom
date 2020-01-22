@@ -26,7 +26,7 @@ export default {
     name: '',
   }),
   beforeDestroy() {
-      this.$store.commit('USERNAMEINPUT', { name: this.name })
+    this.$store.commit('USERNAMEINPUT', { name: this.name })
   },
 }
 </script>
