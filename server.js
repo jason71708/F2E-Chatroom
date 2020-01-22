@@ -1,20 +1,17 @@
+'use strict';
+
 const express = require('express');
 const socketIO = require('socket.io');
 
-const port = process.env.PORT || 3000; //new
-const path = require('path'); //new
+const PORT = process.env.PORT || 3000;
+const path = require('path');
 const serveStatic = require('serve-static');
 
 const server = express()
-server.use('/', serveStatic(path.join(__dirname, '/dist')));  //new
-server.get(/.*/, function (req, res) {
-	res.sendFile(path.join(__dirname, '/dist/index.html'))
-})//new
-server.listen(port);
+  .use('/', serveStatic(path.join(__dirname, '/dist')))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`))
 
-const server2 = require('http').Server(server);
-
-const io = socketIO(server2);
+const io = socketIO(server);
 
 io.on('connection', function (socket) {
   socket.on('userInOut', function (data) {
