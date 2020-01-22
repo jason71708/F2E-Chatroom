@@ -1,19 +1,20 @@
+const express = require('express');
+const socketIO = require('socket.io');
+
+const port = process.env.PORT || 3000; //new
 const path = require('path'); //new
-var express = require('express');
-const cool = require('cool-ascii-faces')//heroku
 const serveStatic = require('serve-static');
-var app = require('express')();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var port = process.env.PORT || 5000; //new
 
-server.listen(port);
-// WARNING: app.listen(80) will NOT work here!
-
-app.use('/', serveStatic(path.join(__dirname, '/dist')));  //new
-app.get(/.*/, function (req, res) {
+const server = express()
+server.use('/', serveStatic(path.join(__dirname, '/dist')));  //new
+server.get(/.*/, function (req, res) {
 	res.sendFile(path.join(__dirname, '/dist/index.html'))
 })//new
+server.listen(port);
+
+const server2 = require('http').Server(server);
+
+const io = socketIO(server2);
 
 io.on('connection', function (socket) {
   socket.on('userInOut', function (data) {

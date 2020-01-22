@@ -53,11 +53,14 @@
 export default {
     data: () => ({
         isChoose: false,
-        userAvatar: 1,
     }),
+    computed: {
+        userAvatar() {
+            return this.$store.state.avatarNum
+        }
+    },
     methods: {
         changeAvatarHandler(n) {
-            this.userAvatar = n;
             this.isChoose = !this.isChoose;
             this.$store.commit('CHANGE_AVATAR', { num: n });
         }
