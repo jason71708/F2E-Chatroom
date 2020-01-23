@@ -158,13 +158,8 @@ import JMessage from '@/components/smallCP/JMessage';
 import JUserInOutMessage from '@/components/smallCP/JUserInOutMessage';
 
 import io from "socket.io-client";
-<<<<<<< HEAD
 const socket = io();
 // const socket = io("http://localhost:3000");
-=======
-// const socket = io.connect();
-const socket = io("http://localhost:3000");
->>>>>>> devolop
 
 export default {
   name: 'chat',

@@ -6,29 +6,6 @@ export default new Vuex.Store({
         userName: '匿名',
         avatarNum: 1,
         messages: [
-<<<<<<< HEAD
-=======
-        {
-            avatar: 5,
-            user: '林勁90909090990呈',
-            time: '16:27',
-            isMe: false,
-            mesg: '不要'
-        },
-        {
-            isConnect: true,
-            user:'林勁呈',
-            time: '16:28',
-            isIn:false,
-        },
-        {
-            avatar: 2,
-            user: 'Ken',
-            time: '16:30',
-            isMe: false,
-            mesg: '不要\n我才不要  不要'
-        },
->>>>>>> devolop
         ],
     },
     mutations: {
