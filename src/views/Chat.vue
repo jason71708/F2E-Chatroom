@@ -1,12 +1,17 @@
 <template>
   <v-row no-gutters justify="center" class="flex-nowrap">
-    <v-navigation-drawer width="300" absolute :permanent="isDesktop" :hide-overlay="true" v-model="drawerPopUp">
+    <v-navigation-drawer :width="this.isMoboile?220:300" absolute :permanent="isDesktop" :hide-overlay="true" v-model="drawerPopUp">
       <v-list-item>  
-          <v-list-item-icon>
-            <AvatarIcon :outer="60" :inner="40" :avatar="userAvatar" :space="2"></AvatarIcon>
+          <v-list-item-icon class="mr-xs-4">
+            <AvatarIcon 
+              :outer="this.isMoboile?40:60" 
+              :inner="this.isMoboile?40*2/3:40" 
+              :avatar="userAvatar" 
+              :space="this.isMoboile?1:2"
+              ></AvatarIcon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="title">{{userName}}</v-list-item-title>
+            <v-list-item-title class="title font-weight-bold" :class="{'subtitle-1':this.isMoboile}">{{userName}}</v-list-item-title>
           </v-list-item-content>
           <!-- <v-list-item-icon class="j-icon">
             <v-icon>mdi-plus-thick</v-icon>
@@ -23,14 +28,18 @@
       <v-list>
         <v-list-item v-for="(i,n) in groups" :key="n" @click="noting()">  
           <v-list-item-icon>
-            <AvatarIcon :outer="60" :inner="40" :avatar="i.avatar" :space="2"></AvatarIcon>
+            <AvatarIcon 
+              :outer="isMoboile?40:60" 
+              :inner="isMoboile?40*2/3:40"
+              :avatar="i.avatar" 
+              :space="isMoboile?1:2"></AvatarIcon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>{{i.name}} ({{i.members}})</v-list-item-title>
-            <v-list-item-subtitle>{{i.subTitle}}</v-list-item-subtitle>
+            <v-list-item-subtitle :class="{'caption':isMoboile}">{{i.subTitle}}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-avatar
-            v-if="i.noSees!==0"
+            v-if="i.noSees!==0&&!isMoboile"
             color="normal" 
             max-height="20" 
             max-width="20" 
@@ -47,20 +56,20 @@
               ></v-img>
             </v-btn>
           </v-list-item-action>
-          <v-list-item-subtitle class="subtitle-1 normal--text">設定</v-list-item-subtitle>
+          <v-list-item-subtitle class="subtitle-1 normal--text" :class="[this.isMoboile?'caption':'subtitle-1']">設定</v-list-item-subtitle>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-col class="j-col" v-if="isDesktop"></v-col>
     <v-col class="j-col2">
        <v-app-bar
-          height="85"
+          :height="this.isMoboile?50:75"
           color="transparent"
           class="border-bottom"
         >        
         <v-app-bar-nav-icon @click.stop="drawerPopUp=!drawerPopUp" v-if="!isDesktop"></v-app-bar-nav-icon>
 
-        <v-toolbar-title class="ml-8">大廳聊天～～ (10)</v-toolbar-title>
+        <v-toolbar-title :class="[this.isMoboile?'subtitle-1':'ml-8']">大廳聊天～～ (10)</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-menu
           bottom
@@ -84,7 +93,7 @@
           </v-list>
         </v-menu>
       </v-app-bar>
-      <v-divider class="j-divdider text-center mb-6"></v-divider>
+      <v-divider class="j-divdider" :class="[this.isMoboile?'mb-3':'mb-6']"></v-divider>
 
       <v-sheet id="messageBox" tile class="j-sheet j-sheet-bgc">
         <template v-for="(message, index) in messageLog">
@@ -112,25 +121,31 @@
             flat
             width="100%"
             class="bgc lighten-1"
-            max-height="54"
-          >
-            <v-card-text class="py-0 px-2">
-              <v-btn v-for="(icon, index) in btns" :key="index" class="my-3 mx-1" icon>
+            :max-height="this.isMoboile?40:54">
+            <v-card-text class="py-0 px-2 d-flex">
+              <v-btn v-for="(icon, index) in btns" :key="index" :class="[isMoboile?'my-1 mx-0':'my-2 mx-1']" icon>
                 <v-img 
-                  max-width="28" 
-                  max-height="28" 
+                  :max-width="isMoboile?20:28" 
+                  :max-height="isMoboile?20:28" 
                   :src="require(`@/assets/icon/${icon}.svg`)">
                 </v-img>
               </v-btn>
+              <v-btn icon @click="sendMessageHandler()" :class="[isMoboile?'my-1 mx-0':'my-2 mx-1']" class="ml-auto">
+                <v-img 
+                  max-width="28" 
+                  max-height="28" 
+                  :src="require(`@/assets/icon/send.svg`)"></v-img>
+              </v-btn>
             </v-card-text>
          </v-card>
-        <v-text-field hide-details filled placeholder="說點什麼吧～" color="normal" height="70px" v-model.trim="inputMessage" @keyup.enter="sendMessageHandler()">
-          <template v-slot:append>
-            <v-btn icon @click="sendMessageHandler()">
-              <img width="30" height="30" :src="require(`@/assets/icon/send.svg`)">
-            </v-btn>
-          </template>
-        </v-text-field>
+        <v-textarea
+          hide-details filled placeholder="說點什麼吧～" 
+          color="normal" 
+          :max-height="this.isMoboile?50:70" 
+          v-model.trim="inputMessage" 
+          rows="1"
+          clearable>
+        </v-textarea>
       </v-footer>
     </v-col>
    
@@ -155,46 +170,32 @@ export default {
   },
   data: () => ({
     items: [
-      { title: "example1" },
-      { title: "example2" },
-      { title: "example3" },
-      { title: "example4" },
+      { title: "按鈕1" },
+      { title: "按鈕2" },
+      { title: "按鈕3" },
     ],
     groups: [
       {
         avatar: 1,
         members: 9,
         name: '八卦版',
-        subTitle: '我不知道',
-        noSees: 123
+        subTitle: '我不知道這邊要',
+        noSees: 3
       },
       {
         avatar: 2,
         members: 156,
         name: '閒聊區',
-        subTitle: '這邊要做成',
+        subTitle: '做成群組資訊',
         noSees: 92
       },
       {
         avatar: 3,
         members: 46,
         name: '遊戲攻略',
-        subTitle: '群組資訊',
+        subTitle: '還是未讀訊息',
         noSees: 12
-      },
-      {
-        avatar: 4,
-        members: 1234,
-        name: '靠北高師大',
-        subTitle: '還是',
-        noSees: 0
-      },{
-        avatar: 5,
-        members: 6,
-        name: '脖子和單身狗群聚地',
-        subTitle: '最新未讀訊息',
-        noSees: 4
-      },
+      }
     ],
     btns: [
       'information',
@@ -205,6 +206,9 @@ export default {
     drawerPopUp: false,
   }),
   computed: {
+    isMoboile() {
+      return this.$vuetify.breakpoint.xsOnly
+    },
     isDesktop() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs': return false
@@ -240,6 +244,7 @@ export default {
     },
     sendMessageHandler() {
       if(this.inputMessage=='')return;
+      // const str = this.inputMessage.replace(/\n/g, '<br>') 用css屬性來換行即可
       const mesgData = {
         avatar: this.userAvatar,
         user: this.userName,
@@ -361,8 +366,14 @@ export default {
 }
 @media (max-width:961px) {
   .v-footer.j-mesg-input{
-      width: 100%;
-      right: 0;
+    width: 100%;
+    right: 0;
+  }
+  .v-application--is-ltr .v-list-item__icon:first-child {
+    margin-right: 16px;
+  }
+  .v-sheet.j-sheet{
+    height: calc(100% - 60px - 90px) ;
   }
 }
 </style>

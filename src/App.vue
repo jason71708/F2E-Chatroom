@@ -24,5 +24,10 @@ export default {
 .v-application--wrap .container{
   padding: 0;
 }
+@media (max-width:600px) {
+  .j-col{
+    padding: 6px !important;
+  }
+}
 </style>
 

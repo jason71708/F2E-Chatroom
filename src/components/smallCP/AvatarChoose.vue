@@ -5,20 +5,22 @@
         @click="isChoose=!isChoose"
         outlined 
         hover
-        max-width="150"
+        :max-width="isMobile ? 100 : 150"
+        :max-height="isMobile ? 100 : 150"
         class="j-avatar-circle mx-auto">
             <v-img
                 :src="require(`@/assets/icon/member0${userAvatar}.svg`)"
-                height="80"
-                width="80"
-                class="mx-auto my-8 over-visible"
+                :height="isMobile ? 80*2/3 : 80"
+                :width="isMobile ? 80*2/3 : 80"
+                class="mx-auto my-5 over-visible"
+                :class="[this.isMobile ? 'my-5':'my-8']"
             ></v-img>
       </v-card>
      <v-sheet
         v-else
         class="mx-auto"
-        max-width="700"
-        max-height="150"
+        :max-width="isMobile ? 700*2/3 : 700"
+        :max-height="isMobile ? 100 : 150"
         >
             <v-slide-group 
               show-arrows 
@@ -30,14 +32,14 @@
                 >
                     <v-card
                         color="transparent"
-                        class="ma-4 my-8 mb-9"
+                        class="j-card--link"
                         elevation='0'
                         @click="changeAvatarHandler(n)"
                     >
                         <v-img
                             :src="require(`@/assets/icon/member0${n}.svg`)"
-                            height="80"
-                            width="80"
+                            :height="isMobile ? 80*2/3 : 80"
+                            :width="isMobile ? 80*2/3 : 80"
                             class="mx-auto over-visible"
                         ></v-img>
                     </v-card>
@@ -55,6 +57,9 @@ export default {
         isChoose: false,
     }),
     computed: {
+        isMobile() {
+            return this.$vuetify.breakpoint.xsOnly
+        },
         userAvatar() {
             return this.$store.state.avatarNum
         }
@@ -68,6 +73,9 @@ export default {
 }
 </script>
 <style>
+.v-card.v-card--link.j-card--link{
+    margin: 32px 12px 36px 12px;
+}
 .theme--dark.v-card.v-card--outlined.j-avatar-circle{
     border: 2px solid #FFFFFF;
     border-radius: 50%;
@@ -80,5 +88,10 @@ export default {
 }
 .v-card > .over-visible{
     overflow: visible;
+}
+@media (max-width:600px) {
+    .v-card.v-card--link.j-card--link{
+        margin: 20px 12px 24px 12px;
+    }
 }
 </style>

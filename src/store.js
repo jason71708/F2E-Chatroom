@@ -7,49 +7,8 @@ export default new Vuex.Store({
         avatarNum: 1,
         messages: [
         {
-            avatar: 6,
-            user: '煞氣a小莊',
-            time: '12:24',
-            isMe: false,
-            mesg: '今天出來玩好不好～'
-        },
-        {
-            avatar: 6,
-            user: '煞氣a小莊',
-            time: '16:24',
-            isMe: false,
-            mesg: '都沒人理我ＱＱ'
-        },
-        {
-            avatar: 4,
-            user: '蘇義翔',
-            time: '16:25',
-            isMe: false,
-            mesg: '不要'
-        },
-        {
-            isConnect: true,
-            user:'蔡昀澤',
-            time: '16:25',
-            isIn:true,
-        },
-        {
-            avatar: 1,
-            user: '蔡昀澤',
-            time: '16:26',
-            isMe: false,
-            mesg: '不要'
-        },
-        {
-            avatar: 7,
-            user: '匿名',
-            time: '16:27',
-            isMe: true,
-            mesg: '不要'
-        },
-        {
             avatar: 5,
-            user: '林勁呈',
+            user: '林勁90909090990呈',
             time: '16:27',
             isMe: false,
             mesg: '不要'
@@ -65,7 +24,7 @@ export default new Vuex.Store({
             user: 'Ken',
             time: '16:30',
             isMe: false,
-            mesg: '不要'
+            mesg: '不要\n我才不要  不要'
         },
         ],
     },
@@ -75,7 +34,8 @@ export default new Vuex.Store({
         },
         USERNAMEINPUT (state, obj) {
             if(obj.name){
-                state.userName = obj.name
+                let legalName = obj.name.slice(0,8)
+                state.userName = legalName
             }else{
                 const num = Math.floor(Math.random()*99)+1;
                 state.userName = '匿名'+ num;
