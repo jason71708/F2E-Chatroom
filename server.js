@@ -3,7 +3,7 @@
 const express = require('express');
 const socketIO = require('socket.io');
 
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3000;
 const path = require('path');
 const serveStatic = require('serve-static');
 
@@ -15,6 +15,7 @@ const io = socketIO(server);
 
 io.on('connection', function (socket) {
   socket.on('userInOut', function (data) {
+    console.log(data)
     io.emit('userInoutMessage', data)
   });
   socket.on('sendMessage', function(data) {
