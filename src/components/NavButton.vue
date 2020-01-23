@@ -7,29 +7,30 @@
           v-for="(item, index) in items"
           :key="index"
           cols="6"
+          class="j-col"
           md="3">
           <v-hover v-slot:default="{ hover }">
              <v-card 
               hover
               to="chat"
               outlined 
-              max-width="240"
+              :max-width="isMobile ? 160 : 240"
               :class="{ 'on-hover': hover }"
-              class="j-card-button mx-auto text-center">
+              class="j-card-button mx-auto text-center pa-3">
                 <v-img
                   :src="require(`@/assets/icon/${item.icon}.svg`)"
-                  height="70"
-                  width="70"
-                  class="mx-auto mt-6"
+                  :height="isMobile ? 50 : 70"
+                  :width="isMobile ? 50 : 70"
+                  class="mx-auto mt-sm-3"
                 ></v-img>
                 <h3
-                  class="mb-7 mt-2"
+                  class="mt-2 mb-sm-4 body-2"
                 >{{item.mode}}</h3>
             </v-card>
           </v-hover>
         </v-col>
-
         <v-switch
+            class="mt-xs-0"
             v-model="$vuetify.theme.dark"
             inset
             hide-details
@@ -57,7 +58,12 @@ export default {
                 icon:'custome'
             },
         ]
-    })
+    }),
+    computed: {
+        isMobile() {
+            return this.$vuetify.breakpoint.xsOnly
+        }
+    },
 }
 </script>
 <style>
