@@ -139,7 +139,7 @@
             </v-card-text>
          </v-card>
         <v-textarea
-          hide-details filled placeholder="說點什麼吧～" 
+          hide-details filled placeholder="目前只有傳訊息功能～" 
           color="normal" 
           :max-height="this.isMoboile?50:70" 
           v-model.trim="inputMessage" 
@@ -179,14 +179,14 @@ export default {
         avatar: 1,
         members: 9,
         name: '八卦版',
-        subTitle: '我不知道這邊要',
+        subTitle: '我不確定這邊要顯示',
         noSees: 3
       },
       {
         avatar: 2,
         members: 156,
         name: '閒聊區',
-        subTitle: '做成群組資訊',
+        subTitle: '群組資訊',
         noSees: 92
       },
       {
