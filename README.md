@@ -1,19 +1,28 @@
-# vue-chat-app
+# F2E-week7-chatroom
 
-## Project setup
-```
-npm install
-```
+## F2E挑戰第七週-匿名聊天室
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### 心得
 
-### Compiles and minifies for production
-```
-npm run build
-```
+>>>因第七週卡到入伍服役，到現在才做完。
+>>>看很多人都用 Firebase 來實現即時聊天~看了有點膩~，所以我用 Socket.io 來實作。
+>>>也因為這需要自己寫個簡易伺服端，所以選擇把專案部署在 Heroku 上。
+>>>這次嘗試的東西有很多，node.js + express 框架、導入 Vutify UI 元件庫，它同時包含 CSS framework 等等。
+>>>本身對後端東西不太熟，在伺服端這邊卡了有點久，部署在 Heroku 上但 Socket 沒反應這邊也吃了不少苦頭。
+>>>即將準備過年後投履歷找工作，這邊暫時實作完大廳聊天模式，開房聊天和其他模式和功能日後再回來更新。
+>>>也透過這次的專案練習 Git flow 和 寫 Markdown。
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 技術工具
+
+`Vue cli + Router + Vuex + Vuetify` `Socket.io` `Node.js + express`
+
+### 待優化項目
+
+* 創群、加入其他房聊天
+* 一對一私人聊天
+* 手機版持續優化 : 已知問題
+ - [ ] 無法正常換行
+ - [ ] 偵測不到網頁關閉
+* 導入後端資料庫，使對話記錄和房間可以保留
+* 傳送貼圖、圖片等功能
+
