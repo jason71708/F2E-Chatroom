@@ -13,7 +13,8 @@
              <v-card 
               hover
               to="chat"
-              outlined 
+              outlined
+              :disabled="index!==0"
               :max-width="isMobile ? 160 : 240"
               :class="{ 'on-hover': hover }"
               class="j-card-button mx-auto text-center pa-3">
